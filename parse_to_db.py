@@ -92,6 +92,7 @@ if __name__ == '__main__':
             # Insert row into Messages table
             insert_mess = "INSERT INTO messages(content, time, photo, reply, backtoback, fk_sender_id) " \
                           "VALUES(?, ?, ?, ?, ?, ?)"
-            mess_tuple = (mess_text, '2019-03-17', file, reply, backtoback, sender)
+            sender_id = sql_query(con, "SELECT id from users where name = ? LIMIT 1", (sender,))[0][0]
+            mess_tuple = (mess_text, '2019-03-17', file, reply, backtoback, sender_id)
             sql_insert(con, insert_mess, mess_tuple)
             # TODO: get timestamp
