@@ -27,12 +27,13 @@ if __name__ == '__main__':
     '''
     Database Version Code
     '''
+    early_date ='2019-03-11'
+    late_date = '2019-03-19'
     con = sql_connection('buds.db')
-    order_users = "SELECT users.name FROM messages JOIN users on messages.fk_sender_id = users.id"
 
-    order_users2 = "SELECT users.name, count()  FROM messages join users on messages.fk_sender_id = users.id GROUP BY fk_sender_id ORDER BY count() DESC LIMIT 20"
+    order_users2 = "SELECT users.name, count()  FROM messages join users on messages.fk_sender_id = users.id WHERE messages.time BETWEEN ? and ? GROUP BY fk_sender_id ORDER BY count() DESC LIMIT 20"
     "SELECT count(messages.id) FROM messages Inner JOIN users on messages.fk_sender_id == users.id GROUP BY fk_sender_id "
     messages = "SELECT *  FROM messages join users on messages.fk_sender_id = users.id"
 
-    ret = sql_query(con, order_users2)
+    ret = sql_query(con, order_users2, (early_date, late_date))
     print(ret)
